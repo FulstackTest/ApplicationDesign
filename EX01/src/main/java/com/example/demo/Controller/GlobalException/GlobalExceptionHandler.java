@@ -35,5 +35,12 @@ public class GlobalExceptionHandler {
     }
 
     // TODO 3) @ExceptionHandler(Exception.class)             -> "global/error3" 반환
-
+    // Exception: 기타 모든 예외 처리
+    // 위에 명시되지 않은 나머지 모든 예외를 처리한다.
+    @ExceptionHandler(Exception.class)
+    public String exceptionHandler_All(Exception e, Model model){
+        log.error("[Global] etc exceptions : " + e);   // 에러로그 출력
+        model.addAttribute("e",e);  // 에러로그를 객체로 view에 전달
+        return "global/error3"; //  에러 페이지로 이동
+    }
 }
