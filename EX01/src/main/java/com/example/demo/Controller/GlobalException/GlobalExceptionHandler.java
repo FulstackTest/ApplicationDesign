@@ -25,6 +25,15 @@ public class GlobalExceptionHandler {
     }
 
     // TODO 2) @ExceptionHandler(ArithmeticException.class)   -> "global/error2" 반환
+    // ArithmeticException: 산술 연산 예외 처리
+    // 수학적 계산 오류가 생겼을 때 발생하는 예외를 처리한다.
+    @ExceptionHandler(ArithmeticException.class)
+    public String exceptionHandler_2(Exception e, Model model){
+        log.error("[Global] ExceptionTestController ex2 : " + e);   // 에러로그 출력
+        model.addAttribute("e",e);  // 에러로그를 객체로 view에 전달
+        return "global/error2"; //  에러 페이지로 이동
+    }
+
     // TODO 3) @ExceptionHandler(Exception.class)             -> "global/error3" 반환
 
 }
