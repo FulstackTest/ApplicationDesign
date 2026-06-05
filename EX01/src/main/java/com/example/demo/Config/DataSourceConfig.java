@@ -30,5 +30,13 @@ public class DataSourceConfig {
     //        - setDriverClassName("com.mysql.cj.jdbc.Driver")
     //        - setJdbcUrl("jdbc:mysql://localhost:3306/testdb"), setUsername("root"), setPassword("1234")
     //  ※ MemberDAO 는 dataSource3(HikariDataSource) 를 주입받아 사용한다.
-
+    @Bean
+    public DataSource dataSource3(){
+        HikariDataSource dataSource = new HikariDataSource(); // Hikari 커넥션 풀 생성
+        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver"); // My SQL 드라이버 설정
+        dataSource.setJdbcUrl("jdbc:mysql://localhost:3306/testdb"); // DB접속 URL 설정
+        dataSource.setUsername("root"); // DB 사용자명
+        dataSource.setPassword("1234"); // DB 비밀번호
+        return dataSource; // dataSource 반환
+    }
 }
