@@ -51,8 +51,17 @@ public class MemberController {
         //     (import org.springframework.validation.FieldError)
         //  2) 검증 통과 시 memberDAO.insert(memberDTO) 호출
         //  3) redirectAttributes.addFlashAttribute("message","회원등록 성공!") 후 "redirect:/member/list" 반환
-
-        throw new UnsupportedOperationException("TODO");
+        if (bindingResult.hasErrors()) {
+            for (FieldError error : bindingResult.getFieldErrors()) {
+                log.info("Error Field : " + error.getField() + " Error Message : " + error.getDefaultMessage());
+                model.addAttribute(error.getField(), error.getDefaultMessage());
+            }
+            return "member/add";
+        }
+        int result = memberDAO.insert(memberDTO);
+        if(result>0)
+            redirectAttributes.addFlashAttribute("message","회원등록 성공!");
+        return "redirect:/member/list";
     }
 
     @GetMapping("/list")
