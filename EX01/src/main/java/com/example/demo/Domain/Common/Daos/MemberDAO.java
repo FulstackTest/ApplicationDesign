@@ -60,6 +60,7 @@ public class MemberDAO {
             while(rs.next()){
                 // 데이터가 있는 동안 while 문이 반복
                 dto = MemberDTO.builder()
+                        .id(rs.getLong("id"))
                         .name(rs.getString("Name"))
                         .email(rs.getString("Email"))
                         .phone(rs.getString("Phone"))
