@@ -5,11 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Timestamp;
+import java.sql.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -47,7 +45,31 @@ public class MemberDAO {
     //  - "select * from tbl_member order by id desc" 실행
     //  - ResultSet 을 돌며 MemberDTO.builder() 로 매핑하여 List 로 반환
     public List<MemberDTO> selectAll() throws SQLException {
-        throw new UnsupportedOperationException("TODO");
+
+        try(
+                Connection conn = dataSource3.getConnection();
+                // dataSource3 에서 Connection을 가져옴
+                PreparedStatement pstmt = conn.prepareStatement("select * from tbl_member order by id desc");
+                ResultSet rs = pstmt.executeQuery();
+                // 전체 회원을 조회하는 SQL문 실행하여 ResultSet 객체에 담음
+        ){
+            List<MemberDTO> list = new ArrayList<>();
+            // 회원 객체들을 담아 리턴할 리스트 생성
+            MemberDTO dto = null;
+            // 각 행에 데이터를 담아둘 MemberDTO 참조 변수를 선언
+            while(rs.next()){
+                // 데이터가 있는 동안 while 문이 반복
+                dto = MemberDTO.builder()
+                        .name(rs.getString("Name"))
+                        .email(rs.getString("Email"))
+                        .phone(rs.getString("Phone"))
+                        .createAt(rs.getTimestamp("createAt").toLocalDateTime())
+                        .build();
+                list.add(dto);
+                // 셋팅된 값들을 바탕으로 최종적인 MemberDTO 객체 를 완성
+            }
+            return list;
+        }
     }
 
 }
