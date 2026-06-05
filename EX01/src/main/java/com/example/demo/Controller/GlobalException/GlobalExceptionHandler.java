@@ -44,3 +44,4 @@ public class GlobalExceptionHandler {
         return "global/error3"; //  에러 페이지로 이동
     }
 }
+ 
