@@ -30,9 +30,9 @@ public class MemberController {
     //  - import : org.springframework.web.bind.annotation.ExceptionHandler
     @ExceptionHandler
     public String SQLExceptionHandler(Exception e, Model model){
-        log.error("MEMO SQLEXCEPTION.." + e);
-        model.addAttribute("ex",e.getMessage());
-        return "member/error";
+        log.error("MEMO SQLEXCEPTION.." + e); // 예외 내용 로그 출력
+        model.addAttribute("ex",e.getMessage()); // 예외 메시지를 모델에 담아 뷰로 전달
+        return "member/error"; // 에러 뷰로 이동
     }
 
     @GetMapping("/add")
@@ -51,17 +51,17 @@ public class MemberController {
         //     (import org.springframework.validation.FieldError)
         //  2) 검증 통과 시 memberDAO.insert(memberDTO) 호출
         //  3) redirectAttributes.addFlashAttribute("message","회원등록 성공!") 후 "redirect:/member/list" 반환
-        if (bindingResult.hasErrors()) {
-            for (FieldError error : bindingResult.getFieldErrors()) {
-                log.info("Error Field : " + error.getField() + " Error Message : " + error.getDefaultMessage());
-                model.addAttribute(error.getField(), error.getDefaultMessage());
+        if (bindingResult.hasErrors()) { // 유효성 검증 오류 확인
+            for (FieldError error : bindingResult.getFieldErrors()) { // 오류 필드 순회
+                log.info("Error Field : " + error.getField() + " Error Message : " + error.getDefaultMessage()); // 오류 로그 출력
+                model.addAttribute(error.getField(), error.getDefaultMessage()); // 오류 메시지 모델에 담기
             }
-            return "member/add";
+            return "member/add"; // 유효성 오류 시 입력 폼으로 반환
         }
-        int result = memberDAO.insert(memberDTO);
+        int result = memberDAO.insert(memberDTO); // 회원 DB 등록
         if(result>0)
-            redirectAttributes.addFlashAttribute("message","회원등록 성공!");
-        return "redirect:/member/list";
+            redirectAttributes.addFlashAttribute("message","회원등록 성공!"); // 성공 메시지 저장
+        return "redirect:/member/list"; // 회원 목록으로 리다이렉트
     }
 
     @GetMapping("/list")
