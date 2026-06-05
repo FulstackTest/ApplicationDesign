@@ -20,7 +20,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(FileNotFoundException.class)
     public String exceptionHandler_1(Exception e, Model model){
         log.error("[Global] ExceptionTestController ex1 : " + e);   // 에러로그 출력
-        model.addAttribute("e",e);  // 에러로그를 객체로 view에 전달
+        model.addAttribute("e",e);  // 에러 정보를 view에 전달
         return "global/error1"; //  에러 페이지로 이동
     }
 
@@ -30,7 +30,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ArithmeticException.class)
     public String exceptionHandler_2(Exception e, Model model){
         log.error("[Global] ExceptionTestController ex2 : " + e);   // 에러로그 출력
-        model.addAttribute("e",e);  // 에러로그를 객체로 view에 전달
+        model.addAttribute("e",e);  // 에러 정보를 view에 전달
         return "global/error2"; //  에러 페이지로 이동
     }
 
@@ -40,7 +40,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public String exceptionHandler_All(Exception e, Model model){
         log.error("[Global] etc exceptions : " + e);   // 에러로그 출력
-        model.addAttribute("e",e);  // 에러로그를 객체로 view에 전달
+        model.addAttribute("e",e);  // 에러 정보를 view에 전달
         return "global/error3"; //  에러 페이지로 이동
     }
 }
